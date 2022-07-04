@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% load widget_tweaks %}
+{% load static %}
+<br>
+<div class="list-group mb-3">
+<form name="list-category" action="{% url 'checker:URLClassifier' %}" method="post">
+{% csrf_token %}
+    <select class="form-select form-select-sm mb-3" name="url">
+        <option value="0">
+        All
+        </option>
+        {% for url in urls %}
+            <option value="{{url.id}}">
+                {{url}}
+            </option>
+        {% endfor %}
+    </select>
+    <input type="submit" class="form-control btn btn-info btn-sm" value="도메인 주소">
+</form>
+</div>
+
+<table class="table table-hover">
+<thead>
+<tr>
+    <th scope="col">수정완료</th>
+    <th scope="col">소유권</th>
+    <th scope="col">URL</th>
+    <th scope="col">저장된 페이지</th>
+    <th scope="col">새로 요청한 페이지</th>
+    <th scope="col">예외처리</th>
+    <th scope="col">최종확인</th>
+<tr>
+</thead>
+
+<tbody>
+    {% for checker in object_list %}
+    <tr>
+    <td>
+        {{ checker.fixed }}
+    </td>
+    <td>{{ checker.owner }}</td>
+    <td>{{ checker.url_address }}</td>
+    <td>{{ checker.content_saved |truncatechars:200 }}</td>
+    <td>{{ checker.content_now }}</td>
+    <td>
+        {{ checker.page_excepted }}
+    </td>
+    <td>{{ checker.last_cheched }}</td>
+    </tr>
+    {% endfor %}
+</tbody>
+</table>
+{% endblock %}
+
+{% block pagination %}
+
+{% if is_paginated %}
+<ul class="pagination justify-content-center pagination-sm">
+    {% if page_obj.has_previous %}
+    <li class="page-item">
+    <a class="page-link" href="{% url 'checker:list' %}?page={{ page_obj.previous_page_number }}" tabindex="-1">이전</a>
+    </li>
+    {% else %}
+    <li class="page-item disabled">
+    <a class="page-link" href="#" tabindex="-1">이전</a>
+    </li>
+    {% endif %}
+
+    {% for object in page_obj.paginator.page_range %}
+    <li class="page-item {% if page_obj.number == forloop.counter %} disabled {% endif %}">
+    <a class="page-link" href="{{ request.path }}?page={{ forloop.counter }}"> {{forloop.counter}} </a>
+    {% endfor %}
+
+    {% if page_obj.has_next %}
+    <li class="page-item">
+        <a class="page-link" href="{% url 'checker:list' %}?page={{ page_obj.next_page_number }}">다음</a>
+    {% else %}
+    <li class="page-item disabled">
+        <a class="page-link" href="#">다음</a>
+    </li>
+    {% endif %}
+</ul>
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+
+{% block content %}
+<br>
+<div class="row">
+<div class="col"></div>
+    <div class="col-7 mb-3">
+    <div class="alert alert-warning" role="alert">
+    이행 점검 URL 페이지 수정
+    </div>
+    <form action="" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="form-group mb-3">
+        <label for="id_fixed" class="form-label">취약점 해결 여부</label>
+        {{ form.fixed|add_class:"form-control"}}
+        <span class="text-danger">{{ form.fixed.errors }}</span>
+    </div>
+    <div class="form-group mb-3">
+        <label for="id_owner" class="form-label">권한</label>
+        {{ form.owner|add_class:"form-control"|append_attr:"readonly:readonly"}}
+        <span class="text-danger">{{ form.owner.errors|striptags }}</span>
+    </div>
+    <div class="form-group mb-3">
+        <label for="id_vul_schedule" class="form-label">취약점 확인 주기</label>
+        {{ form.vul_schedule|add_class:"form-control"}}
+        <span class="text-danger">{{ form.vul_schedule.errors|striptags }}</span>
+    </div>
+    <div class="form-group mb-3">
+        <input type='submit' value="변경사항 저장하기" class="form-control btn btn-info btn-sm">
+    </div>
+    </form>
+    </div>
+<div class="col"></div>
+</div>
+{% endblock %}

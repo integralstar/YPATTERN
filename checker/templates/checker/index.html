@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>결과</h1><br>
+<form name="result" action="{% url 'ycheck:result' %}" method="post">
+{% csrf_token %}
+<input type="text" name="host" placeholder="host name">
+<button type="submit" name="submit">Submit</button>
+</form>
+{% endblock content%}

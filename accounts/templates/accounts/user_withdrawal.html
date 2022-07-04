@@ -1,0 +1,20 @@
+{% extends 'base.html' %} 
+
+{% block content %}
+<br>
+<div class="row">
+  <div class="col"></div>
+  <div class="col-7 mb-3">
+    <div class="alert alert-danger" role="alert">
+      회원을 탈퇴합니다. (이후 로그인이 불가능하며 30일간 계정 정보는 유지가 됩니다)
+    </div>
+    <form action="" method="post">
+      {% csrf_token %}
+      <div class="form-group mb-3">
+      <input type="submit" value="탈퇴하기" class="btn btn-outline-danger" />
+      </div>
+    </form>
+  </div>
+  <div class="col"></div>
+</div>
+{% endblock %}

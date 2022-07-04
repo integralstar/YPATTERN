@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% load widget_tweaks %}
+{% load static %}
+<br>
+<div class="list-group">
+<form name="list-category" action="{% url 'checker:MyURLClassifier' %}" method="post">
+{% csrf_token %}
+    <select class="form-select form-select-sm mb-3" name="category">
+        <option value="0">
+        All
+        </option>
+        {% for url in urls %}
+            <option value="{{url.id}}">
+                {{url}}
+            </option>
+        {% endfor %}
+    </select>
+    <input type="submit" class="form-control btn btn-info btn-sm" value="조회">
+</form>
+</div>
+<br>
+
+<table class="table table-hover">
+<thead>
+<tr>
+    <th scope="col">수정</th>
+    <th scope="col">Response 값</th>
+    <th scope="col">예외처리</th>
+    <th scope="col">최근변경</th>
+<tr>
+</thead>
+
+<tbody>
+    {% for checker in object_list %}
+        {% if checker.owner == request.user %}
+        <tr>
+            <td>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="{{ checker.fixed }}" id="fixed" checked disabled>
+                </div>
+            </td>
+            <td>
+                <div class="form-check">
+                <input class="form-check-input" type="text" value="{{ checker.content_now | truncatechars:200 }}" id="content" disabled>
+                </div>
+            </td>
+            <td>
+                <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="{{ checker.page_excepted }}" id="page_excepted" checked disabled>
+                </div>
+            </td>
+
+            <td>
+                <div class="form-check">
+                <input class="form-check-input" type="text" value="{{ checker.last_checked }}" id="last_checked" disabled>
+                </div>
+            </td>
+
+            <td><a href="{% url 'checker:update' pk=checker.sn %}" class="btn btn-warning btn-sm">수정</a></td>
+            <td><a href="{% url 'checker:delete' pk=checker.sn %}" class="btn btn-danger btn-sm">삭제</a></td>
+        </tr>
+        {% endif %}
+    {% endfor %}
+</tbody>
+</table>
+{% endblock %}
+
+<br>
+{% block pagination %}
+
+{% if is_paginated %}
+<ul class="pagination justify-content-center pagination-sm">
+    {% if page_obj.has_previous %}
+    <li class="page-item">
+    <a class="page-link" href="{% url 'checker:list' %}?page={{ page_obj.previous_page_number }}" tabindex="-1">이전</a>
+    </li>
+    {% else %}
+    <li class="page-item disabled">
+    <a class="page-link" href="#" tabindex="-1">이전</a>
+    </li>
+    {% endif %}
+
+    {% for object in page_obj.paginator.page_range %}
+    <li class="page-item {% if page_obj.number == forloop.counter %} disabled {% endif %}">
+    <a class="page-link" href="{{ request.path }}?page={{ forloop.counter }}"> {{forloop.counter}} </a>
+    {% endfor %}
+
+    {% if page_obj.has_next %}
+    <li class="page-item">
+        <a class="page-link" href="{% url 'checker:list' %}?page={{ page_obj.next_page_number }}">다음</a>
+    {% else %}
+    <li class="page-item disabled">
+        <a class="page-link" href="#">다음</a>
+    </li>
+    {% endif %}
+</ul>
+{% endif %}
+
+{% endblock %}

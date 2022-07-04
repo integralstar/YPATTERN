@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<br>
+<div class="row">
+<div class="col"></div>
+  <div class="col-7 mb-3">  
+    <div class="alert alert-danger">"등록된 URL : {{object.checker}}"를 삭제합니다.</div>
+    {% if messages %}
+    <div class="alert alert-danger">
+    {% for message in messages %}
+        {{message}}
+    {% endfor %}
+    </div>
+    {% endif %}
+    <form action="" method="post">
+    {% csrf_token %}
+    <input type="submit" value="삭제" class="form-control btn btn-danger">
+    </form>
+  </div>
+<div class="col"></div>
+</div>
+{% endblock content %}

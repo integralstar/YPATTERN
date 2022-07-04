@@ -1,0 +1,80 @@
+<html>
+<head>
+{% block head %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'style.css' %}">
+<script src="https://code.jquery.com/jquery-3.5.1.min.js" crossorigin="anonymous"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+{% endblock %}
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">이행 점검 자동 체크 시스템</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="/">Home</a>
+        </li>
+        {% if user.is_authenticated %}
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'checker:add' %}">취약점 URL 입력</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'checker:mychecker' %}">관리</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            계정
+          </a>
+        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <li><a class="dropdown-item" href="#">프로필 정보</a></li>
+          <li><a class="dropdown-item" href="{% url 'accounts:password_change' %}">비밀번호 변경</a></li>
+          <li><hr class="dropdown-divider"></li>
+          <li><a class="dropdown-item" href="{% url 'accounts:withdrawal' %}">탈퇴</a></li>
+        </ul>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'accounts:logout' %}">로그아웃</a>
+        </li>
+        <li class="nav-item">
+        <a class="nav-link" href="#"> [{{ user.username }}님이 로그인 하였습니다.]</a>
+        </li>
+        {% else %}
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            계정
+          </a>
+        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <li><a class="dropdown-item" href="{% url 'accounts:signup' %}">가입</a></li>
+          <li><a class="dropdown-item" href="{% url 'accounts:find_id' %}">아이디 찾기</a></li>
+          <li><a class="dropdown-item" href="{% url 'accounts:find_password' %}">비밀번호 찾기</a></li>
+        </ul>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'accounts:login' %}">로그인</a>
+        </li>
+        {% endif %}
+      </ul>
+      <form class="d-flex" method="POST" action="/search/">
+        {% csrf_token %}
+        <input class="form-control mr-sm-2" type="search" placeholder="키워드" aria-label="Search" name="search_keyword"/>
+        <input class="btn btn-outline-success my-2 my-sm-0" type="submit" value="검색">
+      </form>
+    </div>
+  </div>
+</nav>
+{% block content %}
+
+{% endblock %}
+
+{% block pagination %}
+
+{% endblock %}
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+</body>
+</html>

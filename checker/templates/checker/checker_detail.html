@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% load static %}
+{% load tags %}
+<br>
+<div class="row">
+<div class="col"></div>
+  <div class="col-7 mb-3">
+  <div class="alert alert-info" role="alert">
+    URL 상세 정보
+  </div>
+
+  <table class="table table-hover">
+  <tbody>
+    <tr>
+      <th scope="row">소유권</th>
+      <td>{{object.owner}}</td>
+    </tr>
+    <tr>
+      <th scope="row">URL</th>
+      <td>{{object.url_address}}</td>
+    </tr>
+    <tr>
+      <th scope="row">메모</th>
+      <td>{{object.memo}}</td>
+    </tr>
+    <tr>
+        <th scope="row">취약점 수정 여부</th>
+        <td>{{object.fixed}}</td>
+    </tr>
+    <tr>
+        <th scope="row">content</th>
+        <td>{{object.content}}</td>
+    </tr>
+    <tr>
+        <th scope="row">예외 처리 적용</th>
+        <td>{{object.page_excepted}}</td>
+    </tr>
+    <tr>
+        <th scope="row">마지막 업데이트</th>
+        <td>{{object.last_checked}}</td>
+    </tr>
+  </tbody>
+  </table>
+  </div>
+<div class="col"></div>
+</div>
+{% endblock %}

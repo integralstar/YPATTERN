@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>테스트 패턴 입력</h1><br>
+
+<form name="" action="{% url 'PM:get_pattern' %}" method="post">
+{% csrf_token %}
+<input type="text" name="pattern" placeholder="pattern">
+<button type="submit" name="submit">패턴 만들기</button>
+</form>
+{% endblock content%}

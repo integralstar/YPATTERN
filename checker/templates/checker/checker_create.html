@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+
+{% block content %}
+<br>
+<div class="row">
+<div class="col"></div>
+    <div class="col-7 mb-3">
+    <div class="alert alert-success" role="alert">
+    스캔하고자 하는 서버를 선택하세요.
+    </div>
+    <form action="" method="post">
+    {% csrf_token %}
+    <div class="form-group mb-3">
+        <label for="id_url" class="form-label">URL</label>
+        {{ form.url_address|add_class:"form-control"}}
+        <span class="text-danger">{{ form.url_address.errors|striptags }}</span>
+    </div>
+    <div class="form-group mb-3">
+        <label for="id_mode" class="form-label">Scan Mode</label>
+        {{ form.scan_mode|add_class:"form-control"}}
+        <span class="text-danger">{{ form.scan_mode.errors|striptags }}</span>
+    </div>
+    <div class="form-group mb-3">
+        <input type='submit' value="스캔 시작" class="form-control btn btn-info btn-sm">
+    </div>
+    </form>
+    </div>
+<div class="col"></div>
+</div>
+{% endblock %}

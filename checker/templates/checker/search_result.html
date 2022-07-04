@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% if checker_list %}
+
+<table class="table">
+<thead>
+<tr>
+    <th scope="col">소유권</th>
+    <th scope="col">페이지 변경 여부</th>
+    <th scope="col">도메인 주소</th>
+    <th scope="col">URL Slug</th>
+    <th scope="col">메모</th>
+    <th scope="col">Response 값</th>
+    <th scope="col"></th>
+<tr>
+</thead>
+
+<tbody>
+    {% for checker in checker_list %}
+    <tr>
+    <td>{{ checker.owner }}</td>
+    <td>{{ checker.fixed }}</td>
+    <td>{{ checker.url_address }}</td>
+    <td>{{ checker.path }}</td>
+    <td><a href="{% url 'checker:detail' pk=checker.id %}">{{ checker.checker_slug|truncatechars:20 }}</a></td>
+    <td>{{ checker.memo|truncatechars:50 }}</td>
+    <td>{{ checker.content }}</td>
+    <td>{{ checker.page_excepted }}</td>
+    </tr>
+    {% endfor %}
+</tbody>
+</table>
+
+{% elif search_word %}
+<br>
+  <center>
+    <b>
+      <strong>{{ search_word }}</strong> 발견된 값이 없습니다! 검색어를 수정해 보세요.
+    </b>
+  </center>
+{% endif %}
+
+{% endblock %}

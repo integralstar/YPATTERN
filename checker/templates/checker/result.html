@@ -1,0 +1,18 @@
+<html>
+<h1>hash value</h1><br>
+{% block content %}
+{% load static %}
+ssdeep : {{ ssdeep }}}<br>
+sha512 : {{ sha512 }}<br><br>
+
+A tag link <br>
+{% if urls %}
+    {% for url in urls %}
+       <b> {{ url }} </b> <br>
+    {% endfor %}
+{% endif %}
+
+content<br>
+{{content}}
+{% endblock %}
+<html>

@@ -1,0 +1,38 @@
+<html>
+    <head>
+    </head>
+    <body>
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+        <div id="app">
+            {{ message }}
+        </div>
+        <div id="application">
+        <div>
+            <input v-model="name" type="text" placeholder="name">
+            <input v-model="age" type="text" placeholder="age">
+            <input v-model="email" type="text" placeholder="email">
+            <input v-model="password" type="text" placeholder="password">
+        </div>
+        <div>
+            <button @click="addUser">Add User</button>
+        </div>
+        <div>
+            <ul>
+                <li v-for="user in users">
+                    <span>{{ user.name }}</span>
+                    <span>{{ user.age }}</span>
+                    <span>{{ user.email }}</span>
+                    <span>{{ user.password }}</span>
+                </li>
+            </ul>
+        </div>
+        <script>
+            var app = new Vue({
+                el: '#app',
+                data: {
+                  message: '안녕하세요 Vue!'
+                }
+              })
+        </script>
+    </body>
+</html>
